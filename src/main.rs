@@ -84,5 +84,7 @@ async fn handle_client(stream: UnixStream) -> Result<()> {
 
     info!("Received request: {}", line);
     buf_stream.write_all(b"END\r\n").await?;
+    buf_stream.shutdown().await?;
+    drop(buf_stream);
     Ok(())
 }
